@@ -1,12 +1,26 @@
 version: "3"
 services:
-  order-limit-service:
-    image: order-limit-service
+  crawl-price:
+    image: crawl-price
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: order-limit-service
+    container_name: crawl-price
     restart: always
     ports:
       - 5631:5631
+    depends_on:
+      - redis
+    environment:
+      REDIS_URL: redis://redis-prod:6379
     command: yarn start
+  redis:
+    image: redis:alpine
+    container_name: redis-prod
+    ports:
+      - "6379:6379"  # Expose Redis port
+    restart: always  # Ensure Redis restarts if needed
+
+volumes:
+  redis-data:
+    driver: local
