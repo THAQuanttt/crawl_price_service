@@ -4,19 +4,17 @@ dotenv.config();
 class Config {
     PORT = +process.env.PORT! || 8000;
 
-    JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!;
+    JWT_SECRET_KEY = process.env.JWT_SECRET_KEY! || "";
 
     NODE_ENV = process.env.NODE_ENV!;
 
-    DB_TYPE = process.env.DB_TYPE!;
-    DB_HOST = process.env.DB_HOST!;
-    DB_PORT = +process.env.DB_PORT!;
-    DB_USERNAME = process.env.DB_USERNAME!;
-    DB_PASSWORD = process.env.DB_PASSWORD!;
-    DB_DATABASE = process.env.DB_DATABASE!;
-    DB_MAX_CONNECTIONS = process.env.DB_MAX_CONNECTIONS!;
-    DB_SSL_ENABLED = process.env.DB_SSL_ENABLED!;
-    DB_REJECT_UNAUTHORIZED = process.env.DB_REJECT_UNAUTHORIZED!;
+    CELERY_ROUTER = {
+        "crawl_price_queue": "worker.craw_price",
+    }
+    REDIS_URL = process.env.REDIS_URL!;
+    COIN_MARKET_CAP_API = process.env.COIN_MARKET_CAP_API!;
+    TIME_LIMIT = process.env.TIME_LIMIT! || 120000;
+    CRON_TIME = process.env.CRON_TIME! || 10800000;
 }
 
 export const config = new Config;

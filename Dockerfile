@@ -4,4 +4,5 @@ USER root
 WORKDIR /webapps
 COPY . .
 RUN yarn install
+RUN yarn build
 COPY . /webapps
