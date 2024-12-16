@@ -13,7 +13,8 @@ class Config {
     }
     REDIS_URL = process.env.REDIS_URL!;
     COIN_MARKET_CAP_API = process.env.COIN_MARKET_CAP_API!;
-    TIME_LIMIT = process.env.TIME_LIMIT! || 10800000;
+    TIME_LIMIT = process.env.TIME_LIMIT! || 120000;
+    CRON_TIME = process.env.CRON_TIME! || 10800000;
 }
 
 export const config = new Config;

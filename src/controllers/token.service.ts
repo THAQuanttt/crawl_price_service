@@ -1,18 +1,19 @@
 import axios from "axios";
 
 import { config } from "../config/configuration";
-import { getCache, setCache } from "../utils/cache";
 import logger from "../utils/logger";
-import { cronService } from "../services/cron.service";
-import { ICronService } from "../services/cron.interface";
-
+import { cronService } from "../services/cron/cron.service";
+import { cacheService } from "../utils/cache";
+import { ICronService } from "../services/cron/cron.interface";
+import { ICacheService } from '../utils/cache';
 class TokenService {
-    constructor(private cronService: ICronService) {}
+    constructor(private readonly cronService: ICronService,
+         private readonly cacheService: ICacheService) {}
     
     // The getPrice function: used to get price of token (by symbol)
     // It will reset Timeout of cronjob and load price of token from cache (Redis)
     getPrice = async (symbol: string) => {
-        let price = await getCache(`token:${symbol}`)
+        let price = await this.cacheService.getCache(`token:price:${symbol}`)
         if (!price)
         {
             price = await this.getPriceFromThirdPartyService(symbol);
@@ -45,11 +46,11 @@ class TokenService {
 
                 logger.info(tokenData[0].quote.USD.price);
 
-                await setCache(`token:${symbol}`, price, Number(config.TIME_LIMIT)/1000);
+                await this.cacheService.setCache(`token:price:${symbol}`, price, Number(config.TIME_LIMIT)/1000);
                 return price;
             } else {
 
-                await setCache(`token:${symbol}`, "null", Number(config.TIME_LIMIT)/1000);
+                await this.cacheService.setCache(`token:price:${symbol}`, "null", Number(config.TIME_LIMIT)/1000);
                 logger.info('Price data not available in expected format');
                 return "null";
             }
@@ -60,4 +61,4 @@ class TokenService {
     }
 }
 
-export const tokenService = new TokenService(cronService);
+export const tokenService = new TokenService(cronService, cacheService);
