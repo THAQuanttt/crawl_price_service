@@ -2,8 +2,7 @@ import axios from "axios";
 
 import { getWorker } from "./worker";
 import logger from "../../utils/logger";
-import { cronService } from "../../services/cron.service";
-
+import { tokenService } from "../../controllers/token.service"
 const { taskName, worker } = getWorker("crawl_price_queue");
 
 worker.register(
@@ -11,7 +10,7 @@ worker.register(
   async (symbol: string) => {
     logger.info("execute task");
     try {
-        cronService.startTask(symbol);
+      await tokenService.getPriceFromThirdPartyService(symbol);
       } 
     catch (error) {
       if (axios.isAxiosError(error)) {
