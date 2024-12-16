@@ -1,14 +1,12 @@
 version: "3"
 services:
-  crm:
-    image: crm
+  order-limit-service:
+    image: order-limit-service
     build: 
-      network: host
       context: .
       dockerfile: Dockerfile
-    container_name: crm
+    container_name: order-limit-service
     restart: always
-    network_mode: host
     ports:
-      - 8000:8000
+      - 5631:5631
     command: yarn start
