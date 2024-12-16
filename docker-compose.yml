@@ -1,0 +1,14 @@
+version: "3"
+services:
+  crm:
+    image: crm
+    build: 
+      network: host
+      context: .
+      dockerfile: Dockerfile
+    container_name: crm
+    restart: always
+    network_mode: host
+    ports:
+      - 8000:8000
+    command: yarn start

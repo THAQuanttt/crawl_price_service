@@ -1,0 +1,19 @@
+{
+    "prettier.ignorePath": ".gitignore",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": [
+      "source.addMissingImports",
+      "source.fixAll.eslint"
+    ],
+    "[json][jsonc][yaml]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "terminal.integrated.autoReplies": {
+      "Terminate batch job (Y/N)": "Y\r"
+    }
+  }
